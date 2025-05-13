@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Error - EventManager</title>
+{% endblock %}
+
+{% block body %}
+    <div class="error-home">
+        <h1>Oops!!</h1><hr><br>
+        <h3>Error: {{ messages }}</h3><br><br>
+        <a href="index">back to home</a>
+    </div>
+{% endblock %}

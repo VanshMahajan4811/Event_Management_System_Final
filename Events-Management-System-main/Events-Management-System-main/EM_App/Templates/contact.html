@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <title>Contact Us - Event Manager</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar-home">
+            <ul>
+                <li><a href="dashboard">EVENT DASHBOARD</a></li>
+                <li><a href="participant">PARTICIPANTS REGISTRATION</a></li>
+                <li><a href="event">EVENT REGISTRATION</a></li>
+                <div>
+                    <a id="logo" href="index" style="width: auto; padding: 5px;">EVENT MANAGER WEB-APP</a>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h1>Contact Us</h1>
+        <p>If you have any questions or need assistance, please feel free to contact us using the information below:</p>
+
+        <section class="contact-info" style="padding: 10px;">
+            <h2>Our Contact Information</h2>
+            <ul>
+                <li><strong>Address:</strong> 123 Event Manager St, City, Country</li>
+                <li><strong>Phone:</strong> +1 (555) 123-4567</li>
+                <li><strong>Email:</strong> support@eventmanager.com</li>
+                <li><strong>Office Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM</li>
+            </ul>
+        </section>
+
+        <section class="contact-form" style="padding: 10px;">
+            <h2>Send Us a Message</h2>
+            <form method="post" action="#">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" placeholder="Your name" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" placeholder="Your email" required><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea><br><br>
+
+                <button type="submit" style="color: var(--text-light);
+                background-color: var(--secondary-color);
+                border: 3px solid var(--primary-color);
+                width: auto;
+                font-weight: 600;
+                border-radius: 8px;">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <div class="footer-home">
+        <ul class="copyright-home">
+            <li>Copyright@2025</li>
+            <li><a href="privacypolicy" class="footer-link" style="color: var(--text-light); text-decoration: none;">Privacy Policy</a></li>
+            <li><a href="contact" class="footer-link" style="color: var(--text-light); text-decoration: none;">Contact Us</a></li>
+            <li id="developer">Developer: Sanyam</li>
+        </ul>
+    </div>
+</body>
+
+</html>

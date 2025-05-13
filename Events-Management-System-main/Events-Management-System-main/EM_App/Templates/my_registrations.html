@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1 style="margin: auto; margin-top: 10px;">My Registered Events:</h1>
+
+{% if registrations %}
+<table border="1" cellpadding="5px" cellspacing="20px" style="margin: auto; margin-top: 3%; color: whitesmoke; font-size: 20px;">
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Registration Type</th>
+            <th>Group Size</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reg in registrations %}
+        <tr>
+            <td>{{ reg.event }}</td>
+            <td>{{ reg.regType }}</td>
+            <td>{{ reg.groupSize }}</td>
+            <td>
+                <form method="post" action="{% url 'cancel_registration' reg.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="oop" style=" border-radius: 3px; width: 100%; color: black; " onclick="return confirm('Are you sure you want to cancel this registration?'); ">Cancel</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You have not registered for any events yet.</p>
+{% endif %}
+
+{% endblock %}

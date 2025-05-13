@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Ticket Booking</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --accent-color: #5c6bc0;
+            --light-bg: #f8f9fa;
+            --dark-text: #333;
+            --light-text: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .booking-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-control label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .tickets-section {
+            margin-top: 40px;
+        }
+
+        .tickets-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .tickets-header h2 {
+            color: var(--primary-color);
+        }
+
+        .tickets-count {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .ticket-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .ticket-card {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .ticket-header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px;
+            position: relative;
+        }
+
+        .ticket-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .ticket-destination {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticket-destination .arrow {
+            margin: 0 8px;
+            font-size: 1rem;
+        }
+
+        .ticket-body {
+            padding: 20px;
+        }
+
+        .ticket-info {
+            margin-bottom: 15px;
+        }
+
+        .ticket-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ticket-info-label {
+            font-weight: 600;
+            width: 80px;
+            color: #666;
+        }
+
+        .ticket-info-value {
+            flex: 1;
+        }
+
+        .ticket-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .no-tickets {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .no-tickets p {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-control {
+                min-width: 100%;
+            }
+            
+            .ticket-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Flight Ticket Booking</h1>
+            <p>Book your next adventure with ease</p>
+        </div>
+
+        <div class="booking-form">
+            <form id="ticketForm">
+                <input type="hidden" id="editIndex" value="">
+                
+                <div class="form-group">
+                    <div class="form-control">
+                        <label for="name">Passenger Name</label>
+                        <input type="text" id="name" placeholder="Enter passenger name" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label for="from">Departure City</label>
+                        <input type="text" id="from" placeholder="From" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label for="to">Destination City</label>
+                        <input type="text" id="to" placeholder="To" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label for="date">Travel Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">Book Ticket</button>
+            </form>
+        </div>
+
+        <div class="tickets-section">
+            <div class="tickets-header">
+                <h2>Your Booked Tickets</h2>
+                <span class="tickets-count" id="ticketsCount">0 tickets</span>
+            </div>
+            
+            <div id="ticketList" class="ticket-list">
+                <!-- Tickets will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('ticketForm');
+        const ticketList = document.getElementById('ticketList');
+        const submitBtn = document.getElementById('submitBtn');
+        const ticketsCount = document.getElementById('ticketsCount');
+        
+        function getTickets() {
+            return JSON.parse(localStorage.getItem('tickets') || '[]');
+        }
+        
+        function saveTickets(tickets) {
+            localStorage.setItem('tickets', JSON.stringify(tickets));
+            updateTicketCount(tickets.length);
+        }
+        
+        function updateTicketCount(count) {
+            ticketsCount.textContent = count === 1 ? '1 ticket' : `${count} tickets`;
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        function renderTickets() {
+            const tickets = getTickets();
+            updateTicketCount(tickets.length);
+            
+            if (tickets.length === 0) {
+                ticketList.innerHTML = `
+                    <div class="no-tickets">
+                        <p>You haven't booked any tickets yet.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            ticketList.innerHTML = '';
+            tickets.forEach((ticket, index) => {
+                const div = document.createElement('div');
+                div.className = 'ticket-card';
+                div.innerHTML = `
+                    <div class="ticket-header">
+                        <h3>${ticket.name}</h3>
+                        <div class="ticket-destination">
+                            <span>${ticket.from}</span>
+                            <span class="arrow">✈</span>
+                            <span>${ticket.to}</span>
+                        </div>
+                    </div>
+                    <div class="ticket-body">
+                        <div class="ticket-info">
+                            <div class="ticket-info-item">
+                                <span class="ticket-info-label">Name:</span>
+                                <span class="ticket-info-value">${ticket.name}</span>
+                            </div>
+                            <div class="ticket-info-item">
+                                <span class="ticket-info-label">From:</span>
+                                <span class="ticket-info-value">${ticket.from}</span>
+                            </div>
+                            <div class="ticket-info-item">
+                                <span class="ticket-info-label">To:</span>
+                                <span class="ticket-info-value">${ticket.to}</span>
+                            </div>
+                            <div class="ticket-info-item">
+                                <span class="ticket-info-label">Date:</span>
+                                <span class="ticket-info-value">${formatDate(ticket.date)}</span>
+                            </div>
+                        </div>
+                        <div class="ticket-actions">
+                            <button class="btn btn-edit" onclick="editTicket(${index})">Edit</button>
+                            <button class="btn btn-delete" onclick="deleteTicket(${index})">Delete</button>
+                        </div>
+                    </div>
+                `;
+                ticketList.appendChild(div);
+            });
+        }
+        
+        function editTicket(index) {
+            const tickets = getTickets();
+            const ticket = tickets[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('name').value = ticket.name;
+            document.getElementById('from').value = ticket.from;
+            document.getElementById('to').value = ticket.to;
+            document.getElementById('date').value = ticket.date;
+            
+            submitBtn.textContent = 'Update Ticket';
+            document.querySelector('.header h1').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function deleteTicket(index) {
+            const tickets = getTickets();
+            tickets.splice(index, 1);
+            saveTickets(tickets);
+            renderTickets();
+        }
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const date = document.getElementById('date').value;
+            const editIndex = document.getElementById('editIndex').value;
+            
+            let tickets = getTickets();
+            const ticket = { name, from, to, date };
+            
+            if (editIndex === '') {
+                tickets.push(ticket); 
+            } else {
+                tickets[editIndex] = ticket;
+                document.getElementById('editIndex').value = '';
+                submitBtn.textContent = 'Book Ticket';
+            }
+            
+            saveTickets(tickets);
+            form.reset();
+            renderTickets();
+        });
+        
+        
+        renderTickets();
+    </script>
+</body>
+</html>

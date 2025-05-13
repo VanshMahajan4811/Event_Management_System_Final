@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Events | Event Manager</title>
+{% endblock %}
+
+{% block body %}
+{% if show_event_registration %}
+<!-- Event Registration Form -->
+<section class="event">
+    <!-- <div class="event-img">
+        <img
+            src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
+    </div> -->
+    <div class="event-ct" style="width: 100%;">
+        <h2 id="eventi" style="margin-block-end: 0;">
+            EVENT REGISTRATION FORM
+        </h2><br><br>
+        <form action="" method="POST" class="form">
+            {% csrf_token %}
+            <div class="eventName">
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" name="eventName" placeholder="Event Name" class="eventData" required>
+            </div>
+            <div class="description">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Description here" class="eventData" required>
+            </div>
+            <div class="location">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="Location" class="eventData" required>
+            </div>
+            <div class="from">
+                <label for="fromDate">From:</label>
+                <input type="date" id="fromDate" name="fromDate" class="eventData" required>
+                <input type="time" id="fromTime" name="fromTime" class="eventData" required>
+            </div>
+            <div class="to">
+                <label for="toDate">To:</label>
+                <input type="date" id="toDate" name="toDate" class="eventData" required>
+                <input type="time" id="toTime" name="toTime" class="eventData" required>
+            </div>
+            <div class="deadline">
+                <label for="deadlineDate">Registration Deadline:</label>
+                <input type="date" id="deadlineDate" name="deadlineDate" class="eventData" required>
+                <input type="time" id="deadlineTime" name="deadlineTime" class="eventData" required>
+            </div>
+            <div class="email">
+                <label for="email">Host Email ID:</label>
+                <input type="email" id="email" name="email" placeholder="E-mail" class="eventData" required>
+            </div>
+            <div class="password">
+                <label for="password">Host Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" class="eventData" required>
+            </div>
+            <input type="submit" id="submit" name="submit" class="eventData">
+            <input type="reset" id="reset" name="reset" class="eventData">
+            <a href="index">back to home</a>
+        </form><br>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

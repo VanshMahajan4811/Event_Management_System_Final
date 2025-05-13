@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Success - EventManager</title>
+    <link rel="stylesheet" href="{% static 'success_custom.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="success-homecontent">
+    <h1>Wohoo!!</h1><hr><br>
+    <h3>{{ messages }}</h3><br><br>
+    <a href="index">back to home</a>
+</div>
+{% endblock %}

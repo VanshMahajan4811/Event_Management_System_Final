@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Participants | Event Manager</title>
+<script src="https://kit.fontawesome.com/698dea9f7b.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block body %}
+<!-- List of all Events from Database -->
+<div class="e_database">
+    <h1>Registrations are open for the following events:</h1><br>
+    <hr>
+    {% for event in events %}
+    <br>
+    <h2>{{ event.eventName }}</h2><br>
+    <p>
+        <strong>Description: </strong>{{ event.description }}<br>
+        <strong>Date(s): </strong>{{ event.fromDate }} - {{ event.toDate }}<br>
+        <strong>Time: </strong>{{ event.fromTime }} - {{ event.toTime }}<br>
+        <strong>Registration Deadline: </strong>{{ event.deadlineDate }} {{ event.deadlineTime }}<br>
+        <strong>Venue: </strong>{{ event.location }}<br>
+    </p>
+    <hr>
+    {% endfor %}
+</div>
+
+{% if show_participant_registration %}
+<!-- Participants Registration Form -->
+<section class="event" style="margin-top: 100px; margin-bottom: 140px; background-color: var(--background-dark); color: var(--text-light); position: relative;
+margin-top: 50px;
+margin-bottom: 100px;
+left: 150px;
+width: 80%;
+height: auto;
+display: flex;
+box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+border-radius: 12px;
+overflow: hidden;">
+    <div class="event-ct" style="width: 100%;">
+        <h2 id="parti" style="margin-block-end: 0;">
+            PARTICIPANTS REGISTRATION FORM
+        </h2><br>
+        <form action="" class="form" method="POST" style="left: 25px; position: relative;" id="participantForm">
+            {% csrf_token %}
+            <div class="participantName">
+                <label for="participantName">Name:</label>
+                <input type="text" id="participantName" name="participantName" placeholder="Name" class="eventData" required>
+            </div>
+            <div class="cno">
+                <label for="cno">Contact No:</label>
+                <input type="tel" id="cno" name="cno" placeholder="Contact" class="eventData" required>
+            </div>
+            <div class="email">
+                <label for="email">Email ID:</label>
+                <input type="email" id="email" name="email" placeholder="E-mail" class="eventData" value="{{ user.email }}" readonly>
+            </div>
+            <div class="event-dropdown">
+                <label for="events">Event:</label>
+                <input list="events" name="event" class="eventData" placeholder="Select Event" required>
+                <datalist id="events">
+                    {% for event in events %}
+                    <option value= "{{ event.eventName }}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <div class="regType-dropdown">
+                <label for="regTypes">Registration Type:</label>
+                <input list="regTypes" name="regType" class="eventData" placeholder="Select mode" required>
+                <datalist id="regTypes">
+                    <option value="Individual"></option>
+                    <option value="Group"></option>
+                </datalist>
+            </div>
+            <div class="groupSize">
+                <label for="groupSize">No of Tickets:</label>
+                <input type="number" id="groupSize" name="groupSize" placeholder="No of Tickets" min="1"
+                    class="eventData">
+            </div>
+
+            <div class="booking-section">
+                <h2>Payment Method</h2> <br><br>
+                <div class="payment-methods">
+                    <div class="payment-method selected" onclick="selectPaymentMethod(this)">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <div>Credit Card</div>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod(this)">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        <div>UPI</div>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod(this)">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <div>Net Banking</div>
+                    </div>
+                </div>
+                
+                <div id="creditCardForm">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label for="expiry">Expiry Date</label>
+            <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="upiForm" style="display:none;">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="upiId">UPI ID</label>
+            <input type="text" id="upiId" name="upiId" placeholder="yourname@upi" required>
+                    </div>
+                </div>
+                
+                <div id="netBankingForm" style="display:none;">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="bankSelect">Select Bank</label>
+            <select id="bankSelect" name="bankSelect" required>
+                            <option value="">Select your bank</option>
+                            <option value="sbi">State Bank of India</option>
+                            <option value="hdfc">HDFC Bank</option>
+                            <option value="icici">ICICI Bank</option>
+                            <option value="axis">Axis Bank</option>
+                            <option value="pnb">Punjab National Bank</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <input type="submit" id="submit" name="submit" class="eventData">
+            <input type="reset" id="reset" name="reset" class="eventData">
+            <a href="index">back to home</a>
+        </form><br>
+    </div>
+</section>
+{% endif %}
+<script>
+    function selectPaymentMethod(element) {
+            // Remove selected class from all payment methods
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked method
+            element.classList.add('selected');
+            
+            // Hide all payment forms
+            document.getElementById('creditCardForm').style.display = 'none';
+            document.getElementById('upiForm').style.display = 'none';
+            document.getElementById('netBankingForm').style.display = 'none';
+            
+            // Show the appropriate form based on selection
+            const methodText = element.textContent.trim();
+            if (methodText.includes('Credit Card')) {
+                document.getElementById('creditCardForm').style.display = 'block';
+            } else if (methodText.includes('UPI')) {
+                document.getElementById('upiForm').style.display = 'block';
+            } else if (methodText.includes('Net Banking')) {
+                document.getElementById('netBankingForm').style.display = 'block';
+            }
+        }
+        
+        document.getElementById('participantForm').addEventListener('submit', function(event) {
+            // Removed event.preventDefault() to allow form submission
+            
+            // Validate form
+            if (this.checkValidity()) {
+                // Get user email
+                const userEmail = document.getElementById('email').value;
+                
+                // Update popup with current ticket information
+                // Assuming currentTicketType and ticketCount are defined elsewhere or remove these lines if not used
+                // document.getElementById('popupTicketType').textContent = currentTicketType;
+                // document.getElementById('popupTicketQuantity').textContent = ticketCount;
+                document.getElementById('userEmailDisplay').textContent = userEmail;
+                
+                // Generate random booking ID
+                const randomNum = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+                document.getElementById('bookingId').textContent = `EH25041${randomNum}`;
+                
+                // Show the popup with animation
+                document.getElementById('popup').classList.add('show');
+                document.getElementById('popupOverlay').classList.add('show');
+                
+                // Simulate email sending (in a real app, this would be done server-side)
+                console.log(`Tickets will be sent to ${userEmail}`);
+                
+                // Allow form submission to proceed naturally
+            } else {
+                // Trigger browser's built-in validation
+                this.reportValidity();
+                event.preventDefault(); // Prevent submission if invalid
+            }
+    });
+    function closePopup() {
+            // Hide the popup
+            document.getElementById('popup').classList.remove('show');
+            document.getElementById('popupOverlay').classList.remove('show');
+            
+            // In a real application, you might redirect to a dashboard or home page
+            // window.location.href = 'dashboard.html';
+    }
+</script>
+{% endblock %}

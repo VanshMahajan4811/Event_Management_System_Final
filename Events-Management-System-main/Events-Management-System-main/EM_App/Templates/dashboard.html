@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Dashboard | Event Manager</title>
+{% endblock %}
+
+{% block body %}
+
+{% if show_event_dashboard %}
+<!-- Dashboard - Login Page -->
+{% if valid != True %}
+<div class="dashboard-home">
+    <center>
+        <h1 style="padding-top: 50px; text-decoration:underline;">EVENT DASHBOARD</h1>
+    </center>
+    <form action="" class="verify-form" method="POST">
+        {% csrf_token %}
+
+        <div class="eventId">
+            <label for="eventId">Event ID:</label>
+            <input type="text" id="eventId" name="eventId" class="eventData" placeholder="Event ID" required>
+        </div>
+        <div class="email">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" placeholder="E-mail" class="eventData" required>
+        </div>
+        <div class="password">
+            <label for="password">Host Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password" class="eventData" required>
+        </div>
+        <input type="submit" id="submit" name="submit" class="dashboardData">
+        <input type="reset" id="reset" name="reset" class="dashboardData">
+    </form>
+    <center>
+        <br><br>
+        <a href="index" class="to-dashboard">back to home</a>
+    </center>
+</div>
+{% endif %}
+
+<!-- Dashboard - Data after authorization -->
+{% if valid == True %}
+<center>
+    <a href="dashboard" class="to-dashboard">back to dashboard</a>
+</center>
+<div class="p_database">
+    {% if participants %}
+        {% for participant in participants %}
+        <h2>{{ participant.name }}</h2><br>
+        <p>
+            <strong>Number: </strong>{{ participant.cno }}<br>
+            <strong>Email: </strong>{{ participant.email }}<br>
+        </p>
+        <hr>
+        {% endfor %}
+    {% else %}
+        <p>No participants registered for this event.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

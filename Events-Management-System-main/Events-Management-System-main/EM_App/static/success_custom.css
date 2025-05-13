@@ -1,0 +1,82 @@
+.submit-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    background-color: var(--secondary-color);
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--primary-color);
+    display: inline-block;
+}
+
+.submit-btn:disabled {
+    background-color: #3a3a3a;
+    border-color: #555555;
+    color: #888888;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.success-homecontent {
+    background-color: #1f1f1f;
+    margin: 100px auto;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(255, 111, 97, 0.8);
+    color: var(--text-light);
+    border-radius: 16px;
+    max-width: 600px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.success-homecontent h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--primary-color);
+}
+
+.success-homecontent h3 {
+    margin-bottom: 30px;
+    font-weight: 400;
+    color: #d1c4e9;
+}
+
+.success-homecontent a {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    background-color: var(--secondary-color);
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.success-homecontent a:hover {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
